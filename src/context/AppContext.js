@@ -16,14 +16,17 @@ export function AppProvider({ children }) {
   const [people, setPeople] = useState([]);
   const [progressByUser,setProgressByUser]=useState({});
   const [customCategories,setCustomCategories]=useState([]);
+  const [labelConfigs, setLabelConfigs] = useState({});
+  
   useEffect(() => {
     let active = true;
     AsyncStorage.getItem(KEY).then(raw => {
-      if (raw && active) { const s = JSON.parse(raw); const profiles=s.progressByUser|| (s.account?.email?{[s.account.email]:{...INITIAL,...(s.data||{})}}:{});setProgressByUser(profiles);setData(s.account?.email?{...freshProgress(),...(profiles[s.account.email]||{})}:freshProgress()); setAccount(s.account?{...s.account,role:s.account.role==='administrador'?'administrador':'colaborador'}:null); setPeople((Array.isArray(s.people)?s.people:[]).map(p=>({...p,role:'colaborador'}))); setCustomCategories(Array.isArray(s.customCategories)?s.customCategories:[]); }
+      if (raw && active) { const s = JSON.parse(raw); const profiles=s.progressByUser|| (s.account?.email?{[s.account.email]:{...INITIAL,...(s.data||{})}}:{});setProgressByUser(profiles);setData(s.account?.email?{...freshProgress(),...(profiles[s.account.email]||{})}:freshProgress()); setAccount(s.account?{...s.account,role:s.account.role==='administrador'?'administrador':'colaborador'}:null); setPeople((Array.isArray(s.people)?s.people:[]).map(p=>({...p,role:'colaborador'}))); setCustomCategories(Array.isArray(s.customCategories)?s.customCategories:[]); setLabelConfigs(s.labelConfigs && typeof s.labelConfigs === 'object' ? s.labelConfigs : {});
+      }
     }).catch(() => {}).finally(() => { if (active) setLoaded(true); });
     return () => { active = false; };
   }, []);
-  useEffect(() => { if (loaded) AsyncStorage.setItem(KEY, JSON.stringify({ account, data, people, customCategories, progressByUser })).catch(() => {}); }, [loaded, account, data, people, customCategories, progressByUser]);
+  useEffect(() => { if (loaded) AsyncStorage.setItem(KEY, JSON.stringify({ account, data, people, customCategories, progressByUser, labelConfigs })).catch(() => {}); }, [loaded, account, data, people, customCategories, progressByUser, labelConfigs]);
   useEffect(() => {
     if(!loaded||!account?.email)return;
     setProgressByUser(old=>old[account.email]===data?old:{...old,[account.email]:data});
@@ -82,10 +85,18 @@ export function AppProvider({ children }) {
     return row;
   };
   const reviewRecord = (id, status) => setData(old => ({ ...old, records: old.records.map(r => r.id === id ? { ...r, status, reviewedBy: account?.name || 'Gestor' } : r) }));
-  return <Context.Provider value={{ loaded, account, data, people, customCategories, allCategories, addCategory, signIn, createDemoAccount, updateAvatar, adminAddPerson, logout, award, visit, scan, answer, addRecord, reviewRecord }}>
-    {children}
-  </Context.Provider>;
+
+  const saveLabelConfig = (categoryId, config) => {
+    setLabelConfigs(old => ({ ...old, [categoryId]: config }));
+  };
+
+  return (
+    <Context.Provider value={{ loaded, account, data, people, customCategories, allCategories, addCategory, signIn, createDemoAccount, updateAvatar, adminAddPerson, logout, award, visit, scan, answer, addRecord, reviewRecord, labelConfigs, saveLabelConfig }}>
+      {children}
+    </Context.Provider>
+  );
 }
+
 export const useApp = () => useContext(Context);
 export const levelFromXp = xp => Math.floor(xp / 150) + 1;
 export const progressForLevel = xp => (xp % 150) / 150;
