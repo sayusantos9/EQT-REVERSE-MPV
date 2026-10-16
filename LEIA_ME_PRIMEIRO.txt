@@ -1,0 +1,27 @@
+# EQT Reverse V11 — sem Supabase — inicializacao simplificada
+
+**COMECE AQUI:** extraia todo o ZIP para uma pasta nova (por exemplo, `C:\EQTReverseLimpo`).
+Os arquivos `App.js`, `package.json` e `INICIAR_AQUI_WINDOWS.cmd` devem ficar **juntos**, na mesma pasta.
+
+No Windows, de **dois cliques em `INICIAR_AQUI_WINDOWS.cmd`**.
+O script abre a pasta correta automaticamente, verifica os arquivos, instala as dependencias explicitamente nessa pasta e inicia o Expo sem usar `npx` ou encontrar o `node_modules` de outro projeto.
+
+## Se preferir PowerShell
+
+Abra um terminal na pasta que contem `App.js` e rode:
+
+```powershell
+Test-Path .\App.js
+npm.cmd --prefix "$PWD" install
+node .\node_modules\expo\bin\cli start --lan --clear
+```
+
+**Importante:** se `Test-Path .\App.js` imprimir `False`, voce esta na pasta errada.
+
+Requer Node.js 22.13+ (Node 22 LTS recomendado). O celular e PC devem estar na mesma rede LAN para o Expo Go.
+
+Esta e a versao **V11 com contas locais demonstrativas**, sem conexao Supabase, sem backend em execucao e sem mudancas nas atividades. O backend/ contem apenas arquivos de planejamento.
+
+**O que foi modificado nesta distribuicao:** o ZIP agora abre diretamente na raiz (sem pasta interna), versoes de dependencias foram especificadas para SDK 57 e o script do Windows foi reforcado para nao instalar dentro de um projeto vizinho.
+
+Nao ha `node_modules` no ZIP. A primeira instalacao depende de internet funcionando. **Nao foi possivel testar a instalacao real neste ambiente porque o npm registry esta inacessivel aqui.** Os arquivos foram conferidos com os testes locais e sintaxe.

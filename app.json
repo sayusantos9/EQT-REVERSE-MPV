@@ -1,0 +1,53 @@
+{
+  "expo": {
+    "name": "EQT Reverse",
+    "slug": "eqt-reverse",
+    "version": "1.4.0",
+    "orientation": "portrait",
+    "icon": "./assets/images/logos/app_icon.png",
+    "userInterfaceStyle": "light",
+    "ios": {
+      "supportsTablet": true,
+      "infoPlist": {
+        "NSCameraUsageDescription": "Usada somente para ler QR Codes de materiais e setores."
+      }
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/images/logos/app_icon.png",
+        "backgroundColor": "#FFFFFF"
+      }
+    },
+    "plugins": [
+      [
+        "expo-camera",
+        {
+          "cameraPermission": "Permitir câmera para ler QR Codes do EQT Reverse",
+          "barcodeScannerEnabled": true,
+          "recordAudioAndroid": false
+        }
+      ],
+      [
+        "expo-audio",
+        {
+          "recordAudioAndroid": false,
+          "enableBackgroundPlayback": false
+        }
+      ]
+    ],
+    "extra": {
+      "prototype": true
+    },
+    "newArchEnabled": true,
+    "splash": {
+      "image": "./assets/images/logos/eqt_reverse_logo.png",
+      "backgroundColor": "#FFFFFF",
+      "resizeMode": "contain"
+    },
+    "web": {
+      "name": "EQT Reverse",
+      "bundler": "metro",
+      "favicon": "./assets/images/logos/app_icon.png"
+    }
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "name": "eqt-reverse",
+  "version": "11.0.0",
+  "private": true,
+  "main": "node_modules/expo/AppEntry.js",
+  "scripts": {
+    "start": "expo start --lan --clear",
+    "android": "expo start --android",
+    "ios": "expo start --ios",
+    "doctor": "expo-doctor",
+    "check": "node tests/test-qr.mjs && node tests/test-lessons.cjs"
+  },
+  "dependencies": {
+    "expo": "~57.0.0",
+    "react": "19.2.3",
+    "react-native": "0.86.0",
+    "expo-camera": "~57.0.6",
+    "@react-native-async-storage/async-storage": "2.2.0",
+    "@expo/vector-icons": "15.1.1",
+    "react-native-safe-area-context": "~5.7.0",
+    "react-native-qrcode-svg": "^6.3.15",
+    "react-native-svg": "15.15.4",
+    "expo-print": "~57.0.2",
+    "expo-sharing": "~57.0.23",
+    "expo-audio": "~57.0.5",
+    "react-dom": "19.2.3",
+    "react-native-web": "^0.21.0",
+    "@expo/metro-runtime": "~57.0.16",
+    "expo-asset": "~57.0.20",
+    "expo-font": "~57.0.4"
+  },
+  "devDependencies": {
+    "@types/react": "~19.2.4",
+    "typescript": "~6.0.3"
+  }
+}
